@@ -3,7 +3,7 @@ pycargoebuild
 =============
 :Author: Michał Górny
 :License: GPL-2.0-or-later
-:Homepage: https://github.com/projg2/pycargoebuild/
+:Repository: https://gitweb.gentoo.org/proj/pycargoebuild.git/
 
 
 pycargoebuild is a generator for ebuilds using the Cargo infrastructure

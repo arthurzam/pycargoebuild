@@ -28,7 +28,7 @@ test = [
 pycargoebuild = "pycargoebuild.__main__:entry_point"
 
 [project.urls]
-Homepage = "https://github.com/projg2/pycargoebuild/"
+Repository = "https://gitweb.gentoo.org/proj/pycargoebuild.git/"
 
 [tool.flit.external-data]
 directory = "data"
