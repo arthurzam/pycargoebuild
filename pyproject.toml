@@ -101,6 +101,16 @@ extend-select = [
     "FURB",
 #   "RUF",
 ]
+ignore = [
+    "B018",
+    "B019",
+    "DTZ011",
+    "LOG015",
+    "PLR1704",
+    "RUF012",
+    "SIM102",
+    "SIM115",
+]
 
 [tool.ruff.lint.flake8-copyright]
 min-file-size = 1
