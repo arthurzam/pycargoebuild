@@ -46,7 +46,7 @@ FETCHERS = ("aria2", "wget")
 
 
 class WorkspaceData(typing.NamedTuple):
-    crates: typing.FrozenSet[Crate]
+    crates: frozenset[Crate]
     workspace_metadata: dict
 
 
@@ -169,7 +169,7 @@ def main(prog_name: str, *argv: str) -> int:
             yield directory
 
     def get_workspace_root(directory: Path) -> WorkspaceData:
-        err: typing.Optional[Exception] = None
+        err: Exception | None = None
         for directory in iterate_parents(directory):
             try:
                 with open(directory / "Cargo.lock", "rb") as cargo_lock:
@@ -216,7 +216,7 @@ def main(prog_name: str, *argv: str) -> int:
             assert False, f"Unexpected args.fetcher={args.fetcher}"
 
     def repack_crates(tar_out: tarfile.TarFile,
-                      crates: typing.Set[Crate],
+                      crates: set[Crate],
                       ) -> None:
         prefix = args.crate_tarball_prefix
         start_time = datetime.datetime.now(tz=datetime.timezone.utc)
@@ -258,7 +258,7 @@ def main(prog_name: str, *argv: str) -> int:
         end_time = datetime.datetime.now(tz=datetime.timezone.utc)
         logging.info(f"Time elapsed during repacking: {end_time - start_time}")
 
-    crates: typing.Set[Crate] = set()
+    crates: set[Crate] = set()
     pkg_metas = []
     for directory in args.directory:
         try:

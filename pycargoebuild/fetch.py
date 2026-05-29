@@ -51,7 +51,7 @@ def fetch_crates_using_aria2(crates: typing.Iterable[Crate], *, distdir: Path
             stdout=sys.stderr)
 
 
-def fetch_files_using_wget(files: typing.Iterable[typing.Tuple[str, Path]]
+def fetch_files_using_wget(files: typing.Iterable[tuple[str, Path]]
                            ) -> None:
     """
     Fetch specified URLs to the specified filenames using wget(1)
@@ -75,7 +75,7 @@ def fetch_crates_using_wget(crates: typing.Iterable[Crate], *, distdir: Path
         (crate.download_url, distdir / crate.filename) for crate in crates)
 
 
-def verify_files(files: typing.Iterable[typing.Tuple[Path, str]]) -> None:
+def verify_files(files: typing.Iterable[tuple[Path, str]]) -> None:
     """
     Verify checksums of specified files
     """

@@ -17,8 +17,8 @@ from pycargoebuild.fetch import fetch_files_using_wget, verify_files
 class Package(typing.NamedTuple):
     url: str
     checksum: str
-    directories: typing.List[str]
-    expected_filename: typing.Optional[str] = None
+    directories: list[str]
+    expected_filename: str | None = None
     crate_license: bool = True
     has_crates_without_license: bool = False
     uses_license_file: bool = False

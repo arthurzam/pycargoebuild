@@ -7,14 +7,14 @@ from textwrap import TextWrapper
 
 
 class CompoundGroup(typing.NamedTuple):
-    prefix: typing.List[str]
-    values: typing.List[typing.Union[str, "CompoundGroup"]]
-    suffix: typing.List[str]
+    prefix: list[str]
+    values: list[typing.Union[str, "CompoundGroup"]]
+    suffix: list[str]
 
 
 class Line(typing.NamedTuple):
     indent: int
-    tokens: typing.List[str]
+    tokens: list[str]
 
 
 def format_license_var(value: str, *, prefix: str, line_width: int = 72
@@ -69,10 +69,10 @@ def format_license_var(value: str, *, prefix: str, line_width: int = 72
             return value
 
     # 3. pretty-format the AST into a list of lines
-    def format_into(lines: typing.List[Line],
+    def format_into(lines: list[Line],
                     indent: int,
                     compound_group: CompoundGroup
-                    ) -> typing.List[Line]:
+                    ) -> list[Line]:
         value_it = iter(compound_group.values)
         value_span = []
         while True:
@@ -95,7 +95,7 @@ def format_license_var(value: str, *, prefix: str, line_width: int = 72
                 # again, if it's flat and short, let's inline it
                 if all(isinstance(x, str) for x in value.values):
                     # mypy can't figure the all() clause above out
-                    sub_values: typing.List[str] = (
+                    sub_values: list[str] = (
                         value.prefix + value.values +
                         value.suffix)  # type: ignore
                     test_line = indent * "    " + " ".join(sub_values)

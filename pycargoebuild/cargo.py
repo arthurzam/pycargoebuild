@@ -35,7 +35,7 @@ class Crate:
     def get_package_directory(self, distdir: Path) -> PurePath:
         return PurePath(f"{self.name}-{self.version}")
 
-    def get_root_directory(self, distdir: Path) -> typing.Optional[PurePath]:
+    def get_root_directory(self, distdir: Path) -> PurePath | None:
         return self.get_package_directory(distdir)
 
     @property
@@ -172,7 +172,7 @@ class GitCrate(Crate):
                 typing.assert_never(host)
 
     @functools.cache
-    def get_root_directory(self, distdir: Path) -> typing.Optional[PurePath]:
+    def get_root_directory(self, distdir: Path) -> PurePath | None:
         """Get the directory containing Cargo.lock"""
         with tarfile.open(distdir / self.filename, "r:gz") as crate_tar:
             while (tar_info := crate_tar.next()) is not None:
@@ -192,12 +192,12 @@ class PackageMetadata(typing.NamedTuple):
     name: str
     version: str
     features: dict[str, bool] = {}
-    license: typing.Optional[str] = None
-    license_file: typing.Optional[str] = None
-    description: typing.Optional[str] = None
-    homepage: typing.Optional[str] = None
+    license: str | None = None
+    license_file: str | None = None
+    description: str | None = None
+    homepage: str | None = None
 
-    def with_replaced_license(self, new_license: typing.Optional[str]
+    def with_replaced_license(self, new_license: str | None
                               ) -> "PackageMetadata":
         return PackageMetadata(name=self.name,
                                version=self.version,
@@ -270,7 +270,7 @@ def get_crates(f: typing.BinaryIO) -> typing.Generator[Crate, None, None]:
 
 
 def get_meta_key(key: str, pkg_meta: dict,
-                 workspace_pkg_meta: dict) -> typing.Optional[str]:
+                 workspace_pkg_meta: dict) -> str | None:
     """Get a key from package metadata respecting ``workspace: true``"""
     value = pkg_meta.get(key)
 
@@ -282,9 +282,11 @@ def get_meta_key(key: str, pkg_meta: dict,
 
 
 def get_package_metadata(f: typing.BinaryIO,
-                         workspace_pkg_meta: dict = {},
+                         workspace_pkg_meta: dict | None = None,
                          ) -> PackageMetadata:
     """Read package from the open ``Cargo.toml`` file"""
+    if workspace_pkg_meta is None:
+        workspace_pkg_meta = {}
     cargo_toml = tomllib.load(f)
 
     if "package" not in cargo_toml and "workspace" in cargo_toml:

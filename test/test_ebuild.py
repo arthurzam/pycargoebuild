@@ -35,7 +35,7 @@ def pkg_meta() -> PackageMetadata:
 
 def make_crate(path: Path,
                cargo_toml: bytes,
-               sub_toml: typing.Optional[bytes] = None,
+               sub_toml: bytes | None = None,
                ) -> None:
     basename = path.name.removesuffix(".crate").removesuffix(".gh.tar.gz")
     with tarfile.open(path, "x:gz") as tarf:
@@ -91,7 +91,7 @@ def crate_dir(tmp_path_factory) -> typing.Generator[Path, None, None]:
 
 @pytest.fixture(scope="session")
 def crates(crate_dir: Path
-           ) -> typing.Generator[typing.List[FileCrate], None, None]:
+           ) -> typing.Generator[list[FileCrate], None, None]:
     yield [FileCrate("foo", "1", ""),
            FileCrate("bar", "2", ""),
            FileCrate("baz", "3", ""),
@@ -99,8 +99,8 @@ def crates(crate_dir: Path
 
 
 @pytest.fixture(scope="session")
-def crates_plus_git(crates: typing.List[FileCrate]
-                    ) -> typing.Generator[typing.List[Crate], None, None]:
+def crates_plus_git(crates: list[FileCrate]
+                    ) -> typing.Generator[list[Crate], None, None]:
     yield crates + [GitCrate("test", "0.1",
                              "https://github.com/projg2/pycargoebuild",
                              "5ace474ad2e92da836de60afd9014cbae7bdd481")]

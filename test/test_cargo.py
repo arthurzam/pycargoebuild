@@ -4,7 +4,6 @@
 
 import io
 import tarfile
-import typing
 from pathlib import PurePath
 
 import pytest
@@ -149,7 +148,7 @@ def test_get_crates_prehistoric():
 
 @pytest.mark.parametrize("exclude", ["", "description", "homepage", "license"])
 def test_get_package_metadata(exclude):
-    data: typing.Dict[str, typing.Optional[str]] = {
+    data: dict[str, str | None] = {
         "name": "test",
         "version": "1.2.3",
         "license": "MIT",
@@ -171,7 +170,7 @@ def test_get_package_metadata(exclude):
 
 @pytest.mark.parametrize("exclude", ["", "description", "homepage", "license"])
 def test_get_package_metadata_workspace(exclude):
-    data: typing.Dict[str, typing.Optional[str]] = {
+    data: dict[str, str | None] = {
         "version": "1.2.3",
         "license": "MIT",
         "description": "A test package",

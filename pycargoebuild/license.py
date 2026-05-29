@@ -8,7 +8,7 @@ import typing
 
 import license_expression
 
-MAPPING: typing.Dict[str, str] = {}
+MAPPING: dict[str, str] = {}
 
 
 class UnmatchedLicense(RuntimeError):
@@ -16,7 +16,7 @@ class UnmatchedLicense(RuntimeError):
 
     def __init__(self,
                  license_key: str,
-                 crate: typing.Optional[str] = None,
+                 crate: str | None = None,
                  ) -> None:
         super().__init__()
         self.license_key = license_key
