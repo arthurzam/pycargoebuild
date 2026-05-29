@@ -168,9 +168,9 @@ def main(prog_name: str, *argv: str) -> int:
             directory /= ".."
             yield directory
 
-    def get_workspace_root(directory: Path) -> WorkspaceData:
+    def get_workspace_root(start_directory: Path) -> WorkspaceData:
         err: Exception | None = None
-        for directory in iterate_parents(directory):
+        for directory in iterate_parents(start_directory):
             try:
                 with open(directory / "Cargo.lock", "rb") as cargo_lock:
                     try:
